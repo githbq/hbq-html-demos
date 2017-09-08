@@ -16,6 +16,6 @@
     "devDependencies": {
         "lite-server": "^2.3.0"
     },
-    "repository": "https://github.com/githbq/hbq-typescript-vue-boilerplate.git",
+    "repository": "https://github.com/githbq/hbq-html-demos.git",
     "license": "MIT"
 }
