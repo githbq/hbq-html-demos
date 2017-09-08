@@ -11,6 +11,7 @@
         html-demo-index
     </div>
     <div id="app">
+        <hbq></hbq>
         <ul>
             <!--根据数组数据自动渲染页面-->
             <li v-for="item in message">{{item}}</li>
@@ -36,6 +37,16 @@
                 //控制isShow的值即可
                 showButton: function() {
                     this.isShow = false;
+                }
+            },
+            components: {
+                hbq: {
+                    template: '<h2>I am hbq {{message}}</h2>',
+                    data: () => {
+                        return {
+                            message: 'hello every one'
+                        }
+                    }
                 }
             }
         })
