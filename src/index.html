@@ -103,6 +103,7 @@
             methods: {
                 //向数组添加一条数据即可
                 showHtml: function(url) {
+                    this.$refs.mainIframe.src = url
                     localStorage.currentHtmlUrl = this.currentHtmlUrl = url
                 }
             }
