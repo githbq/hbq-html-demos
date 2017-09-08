@@ -97,13 +97,13 @@
         new Vue({
             el: '#app',
             data: {
-                currentHtmlUrl: null,
+                currentHtmlUrl: localStorage.currentHtmlUrl,
                 htmls: window.htmls || [],
             },
             methods: {
                 //向数组添加一条数据即可
                 showHtml: function(url) {
-                    this.currentHtmlUrl = url
+                    localStorage.currentHtmlUrl = this.currentHtmlUrl = url
                 }
             }
         })
