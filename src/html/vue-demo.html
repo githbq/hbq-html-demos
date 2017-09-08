@@ -11,7 +11,12 @@
         html-demo-index
     </div>
     <div id="app">
-        <hbq></hbq>
+        <abc>
+            <div> hhhh message2:#{{message}}# </div>
+        </abc>
+        <efg>
+            <slot> gggg </slot>
+        </efg>
         <ul>
             <!--根据数组数据自动渲染页面-->
             <li v-for="item in message">{{item}}</li>
@@ -25,8 +30,7 @@
             el: '#app',
             data: {
                 message: ["第1条数据", "第2条数据"],
-                i: 2,
-                isShow: true
+                isShow: true,
             },
             methods: {
                 //向数组添加一条数据即可
@@ -40,9 +44,27 @@
                 }
             },
             components: {
-                hbq: {
+                abc: {
+                    functional: true,
+                    render: function(createElement, context) {
+                        return createElement(
+                            'b', {
+                                message2: '==message2=='
+                            }, [
+                                context.children
+                            ]
+                        )
+                    },
+                    data: function() {
+                        return {
+                            message2: '>hello message2'
+                        }
+                    }
+                },
+                efg: {
+
                     template: '<h2>I am hbq {{message}}</h2>',
-                    data: () => {
+                    data: function() {
                         return {
                             message: 'hello every one'
                         }
