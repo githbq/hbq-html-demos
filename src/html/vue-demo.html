@@ -1,0 +1,45 @@
+<html>
+
+<head>
+    <title>
+        html-demo
+    </title>
+</head>
+
+<body>
+    <div>
+        html-demo-index
+    </div>
+    <div id="app">
+        <ul>
+            <!--根据数组数据自动渲染页面-->
+            <li v-for="item in message">{{item}}</li>
+        </ul>
+        <button @click="add" v-show="isShow">添加数据</button>
+        <button @click="showButton">隐藏按钮</button>
+    </div>
+    <script src="../libs/vue-dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                message: ["第1条数据", "第2条数据"],
+                i: 2,
+                isShow: true
+            },
+            methods: {
+                //向数组添加一条数据即可
+                add: function() {
+                    this.i++
+                        this.message.push("第" + this.i + "条数据")
+                },
+                //控制isShow的值即可
+                showButton: function() {
+                    this.isShow = false;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+{
+    "name": "html-demo",
+    "version": "1.0.0",
+    "description": "html demo",
+    "author": "hbqhbq123@qq.com",
+    "keywords": [
+        "html",
+        "demo"
+    ],
+    "scripts": {
+        "start": "lite-server --config  ./lite-server-config.js "
+    },
+    "dependencies": {
+        "vue": "^2.4.2"
+    },
+    "devDependencies": {
+        "lite-server": "^2.3.0"
+    },
+    "repository": "https://github.com/githbq/hbq-typescript-vue-boilerplate.git",
+    "license": "MIT"
+}
