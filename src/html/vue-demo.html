@@ -1,79 +1,81 @@
 <html>
 
 <head>
-    <title>
-        html-demo
-    </title>
+  <title>
+    html-demo
+  </title>
 </head>
 
 <body>
-    <div>
-        html-demo-index
-    </div>
-    <a href="http://blog.csdn.net/garyhu1/article/details/70332297">Vue的Render函数</a>
-    <div id="app">
-        <abc>
-            <div> hhhh message2:#{{message}}# </div>
-        </abc>
-        <efg>
-            <slot> gggg </slot>
-        </efg>
-        <ul>
-            <!--根据数组数据自动渲染页面-->
-            <li v-for="item in message">{{item}}</li>
-        </ul>
-        <button @click="add" v-show="isShow">添加数据</button>
-        <button @click="showButton">隐藏按钮</button>
-    </div>
-    <script src="../libs/vue-dist/vue.js"></script>
-    <script>
-        new Vue({
-            el: '#app',
-            data: {
-                message: ["第1条数据", "第2条数据"],
-                isShow: true,
-            },
-            methods: {
-                //向数组添加一条数据即可
-                add: function() {
-                    this.i++
-                        this.message.push("第" + this.i + "条数据")
-                },
-                //控制isShow的值即可
-                showButton: function() {
-                    this.isShow = false;
-                }
-            },
-            components: {
-                abc: {
-                    functional: true,
-                    render: function(createElement, context) {
-                        return createElement(
-                            'b', {
-                                message2: '==message2=='
-                            }, [
-                                context.children
-                            ]
-                        )
-                    },
-                    data: function() {
-                        return {
-                            message2: '>hello message2'
-                        }
-                    }
-                },
-                efg: {
-
-                    template: '<h2>I am hbq {{message}}</h2>',
-                    data: function() {
-                        return {
-                            message: 'hello every one'
-                        }
-                    }
-                }
+  <div>
+    html-demo-index
+  </div>
+  <a href="http://blog.csdn.net/garyhu1/article/details/70332297">Vue的Render函数</a>
+  <div id="app">
+    <abc>
+      <div> hhhh message2:#{{message}}# </div>
+    </abc>
+    <efg>
+      <slot> gggg </slot>
+    </efg>
+    <ul>
+      <!--根据数组数据自动渲染页面-->
+      <li v-for="item in message">{{item}}</li>
+    </ul>
+    <button @click="add" v-show="isShow">添加数据</button>
+    <button @click="showButton">隐藏按钮</button>
+  </div>
+  <script src="../libs/vue-dist/vue.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        message: ["第1条数据", "第2条数据"],
+        isShow: true,
+        i: 2,
+      },
+      methods: {
+        //向数组添加一条数据即可
+        add: function () {
+          this.i++
+            this.message.push("第" + this.i + "条数据")
+        },
+        //控制isShow的值即可
+        showButton: function () {
+          this.isShow = false;
+        }
+      },
+      components: {
+        abc: {
+          functional: true,
+          render: function (createElement, context) {
+            return createElement(
+              'b', {
+                message2: '==message2=='
+              }, [
+                context.children
+              ]
+            )
+          },
+          data: function () {
+            return {
+              message2: '>hello message2'
             }
-        })
-    </script>
+          }
+        },
+        efg: {
+
+          template: '<h2>I am hbq {{message}}</h2>',
+          data: function () {
+            return {
+              message: 'hello every one'
+            }
+          }
+        }
+      }
+    })
+
+  </script>
 </body>
 
 </html>
