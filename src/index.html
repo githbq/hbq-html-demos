@@ -37,12 +37,21 @@
       height: 100%;
       width: 100%;
       display: flex;
+      border: 5px solid gray;
     }
 
     .container-body {
       flex: 1;
-      border: 5px solid gray;
       overflow: hidden;
+    }
+
+    .middle {
+      background-color: gray;
+      padding: 0 10px;
+    }
+
+    .middle:hover {
+      background-color: lightblue;
     }
 
     .container-body.left {
@@ -73,22 +82,34 @@
       color: blue;
     }
 
+    .hidden {
+      display: none;
+    }
+
+    .loaded {
+      display: block;
+    }
+
   </style>
 </head>
 
 <body>
-  <div class="main" id="app">
+  <div class="main hidden" :class="{hidden:!loaded,loaded:loaded}" id="app">
     <div class="head">
       <h1>div-demos-> {{currentHtmlUrl}}</h1>
     </div>
     <div class="content">
-      <div class="container-body left">
+      <div v-if="listShow" class="container-body left">
         <ul class="html-list">
-          <li :class="{active:item===currentHtmlUrl}" class="html-item" v-for="(item,index) in htmls" @click="showHtml(item,$event,index)">{{item}}</li>
+          <li :class="{active:item===currentHtmlUrl}" class="html-item" v-for="(item,index) in htmls"
+            @click="showHtml(item,$event,index)">{{item}}</li>
         </ul>
       </div>
+      <div class="middle" @click="toggle">
+      </div>
       <div ref="test" class="container-body right">
-        <iframe ref="frameMain" v-bind:src="currentHtmlUrl" class="main-iframe" v-if="currentHtmlUrl" frameborder="0"></iframe>
+        <iframe ref="frameMain" v-bind:src="currentHtmlUrl" class="main-iframe" v-if="currentHtmlUrl"
+          frameborder="0"></iframe>
       </div>
     </div>
   </div>
@@ -98,10 +119,19 @@
     new Vue({
       el: '#app',
       data: {
+        loaded: false,
+        listShow: localStorage.listShow !== '',
         currentHtmlUrl: localStorage.currentHtmlUrl,
         htmls: window.htmls || [],
       },
+      mounted: function () {
+        this.loaded = true
+      },
       methods: {
+        toggle: function () {
+          this.listShow = !this.listShow
+          localStorage.listShow = this.listShow ? '1' : ''
+        },
         //向数组添加一条数据即可
         showHtml: function (url) {
           this.$refs.frameMain && (this.$refs.frameMain
