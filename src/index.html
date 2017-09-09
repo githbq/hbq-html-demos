@@ -1,114 +1,118 @@
 <html>
 
 <head>
-    <title>
-        html-demos
-    </title>
-    <style type="text/css">
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            overflow: hidden;
-        }
+  <title>
+    html-demos
+  </title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
 
-        li {
-            list-style: none;
-        }
+    li {
+      list-style: none;
+    }
 
-        .main {
-            border: 5px solid green;
-            padding: 15px;
-            height: 100vh;
-            width: 100wh;
-            display: flex;
-            flex-direction: column;
-        }
+    .main {
+      border: 5px solid green;
+      padding: 15px;
+      height: 100vh;
+      width: 100wh;
+      display: flex;
+      flex-direction: column;
+    }
 
-        .head {
-            height: 50px;
-        }
+    .head {
+      height: 50px;
+    }
 
-        .content {
-            flex: 1;
-        }
+    .content {
+      flex: 1;
+    }
 
-        .content {
-            height: 100%;
-            width: 100%;
-            display: flex;
-        }
+    .content {
+      height: 100%;
+      width: 100%;
+      display: flex;
+    }
 
-        .container-body {
-            flex: 1;
-            border: 5px solid gray;
-            overflow: hidden;
-        }
+    .container-body {
+      flex: 1;
+      border: 5px solid gray;
+      overflow: hidden;
+    }
 
-        .container-body.left {
-            width: 30%;
-            flex: 0 0 30%;
-        }
+    .container-body.left {
+      width: 30%;
+      flex: 0 0 30%;
+    }
 
-        .main-iframe {
-            height: 100%;
-            width: 100%;
-        }
+    .main-iframe {
+      height: 100%;
+      width: 100%;
+    }
 
-        .html-item {
-            color: black;
-            font-size: 16px;
-            padding: 15px;
-            background-color: lightblue;
-            margin: 2px;
-        }
+    .html-item {
+      color: black;
+      font-size: 16px;
+      padding: 15px;
+      background-color: lightblue;
+      margin: 2px;
+    }
 
-        .html-item:hover {
-            background-color: aquamarine;
-        }
+    .html-item:hover {
+      background-color: aquamarine;
+    }
 
-        .html-item.active {
-            font-weight: bold;
-            background-color: greenyellow;
-            color: blue;
-        }
-    </style>
+    .html-item.active {
+      font-weight: bold;
+      background-color: greenyellow;
+      color: blue;
+    }
+
+  </style>
 </head>
 
 <body>
-    <div class="main" id="app">
-        <div class="head">
-            <h1>div-demos-> {{currentHtmlUrl}}</h1>
-        </div>
-        <div class="content">
-            <div class="container-body left">
-                <ul class="html-list">
-                    <li :class="{active:item===currentHtmlUrl}" class="html-item" v-for="(item,index) in htmls" @click="showHtml(item,$event,index)">{{item}}</li>
-                </ul>
-            </div>
-            <div class="container-body right">
-                <iframe ref="mainIframe" v-bind:src="currentHtmlUrl" class="main-iframe" v-if="currentHtmlUrl" frameborder="0"></iframe>
-            </div>
-        </div>
+  <div class="main" id="app">
+    <div class="head">
+      <h1>div-demos-> {{currentHtmlUrl}}</h1>
     </div>
-    <script src="index.js"></script>
-    <script src="libs/vue-dist/vue.js"></script>
-    <script>
-        new Vue({
-            el: '#app',
-            data: {
-                currentHtmlUrl: localStorage.currentHtmlUrl,
-                htmls: window.htmls || [],
-            },
-            methods: {
-                //向数组添加一条数据即可
-                showHtml: function(url) {
-                    this.$refs.mainIframe.src = url
-                    localStorage.currentHtmlUrl = this.currentHtmlUrl = url
-                }
-            }
-        })
-    </script>
+    <div class="content">
+      <div class="container-body left">
+        <ul class="html-list">
+          <li :class="{active:item===currentHtmlUrl}" class="html-item" v-for="(item,index) in htmls" @click="showHtml(item,$event,index)">{{item}}</li>
+        </ul>
+      </div>
+      <div ref="test" class="container-body right">
+        <iframe ref="frameMain" v-bind:src="currentHtmlUrl" class="main-iframe" v-if="currentHtmlUrl" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+  <script src="index.js"></script>
+  <script src="libs/vue-dist/vue.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        currentHtmlUrl: localStorage.currentHtmlUrl,
+        htmls: window.htmls || [],
+      },
+      methods: {
+        //向数组添加一条数据即可
+        showHtml: function (url) {
+          this.$refs.frameMain && (this.$refs.frameMain
+            .src = url)
+          localStorage.currentHtmlUrl = this.currentHtmlUrl =
+            url
+        }
+      }
+    })
+
+  </script>
 </body>
 
 </html>
