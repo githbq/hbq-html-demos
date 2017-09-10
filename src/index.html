@@ -16,7 +16,7 @@
             list-style: none;
         }
 
-        .main {
+        #root.main {
             border: 5px solid green;
             padding: 15px;
             height: 100vh;
@@ -93,7 +93,7 @@
 </head>
 
 <body>
-    <div class="main hidden" :class="{hidden:!loaded,loaded:loaded}" id="app">
+    <div id="root" class="main hidden" :class="{hidden:!loaded,loaded:loaded}">
         <div class="head">
             <h1>html-demos-> <a :href="currentHtmlUrl">{{currentHtmlUrl}} </a></h1>
         </div>
@@ -114,7 +114,7 @@
     <script src="libs/vue-dist/vue.js"></script>
     <script>
         new Vue({
-            el: '#app',
+            el: '#root',
             data: {
                 loaded: false,
                 listShow: localStorage.listShow !== '',
