@@ -1,22 +1,22 @@
 {
-    "name": "html-demo",
-    "version": "1.0.0",
-    "description": "html demo",
-    "author": "hbqhbq123@qq.com",
-    "keywords": [
-        "html",
-        "demo"
-    ],
-    "scripts": {
-        "start": "lite-server --config  ./lite-server-config.js "
-    },
-    "dependencies": {
-        "normalize.css": "^7.0.0",
-        "vue": "^2.4.2"
-    },
-    "devDependencies": {
-        "lite-server": "^2.3.0"
-    },
-    "repository": "https://github.com/githbq/hbq-html-demos.git",
-    "license": "MIT"
+  "name": "html-demo",
+  "version": "1.0.0",
+  "description": "html demo",
+  "author": "hbqhbq123@qq.com",
+  "keywords": [
+    "html",
+    "demo"
+  ],
+  "scripts": {
+    "start": "node main && lite-server --config  ./lite-server-config.js "
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "globby": "^6.1.0",
+    "js-beautify": "^1.6.14",
+    "json-stringify-pretty-compact": "^1.0.4",
+    "lite-server": "^2.3.0"
+  },
+  "repository": "https://github.com/githbq/hbq-html-demos.git",
+  "license": "MIT"
 }
