@@ -12,6 +12,7 @@
   </div>
   <a href="http://blog.csdn.net/garyhu1/article/details/70332297">Vue的Render函数</a>
   <div id="app">
+    <input type="text" v-model="userName"> {{userName}}
     <abc>
       <div> hhhh message2:#{{message}}# </div>
     </abc>
@@ -33,12 +34,13 @@
         message: ["第1条数据", "第2条数据"],
         isShow: true,
         i: 2,
+        userName: 'userName'
       },
       methods: {
         //向数组添加一条数据即可
         add: function () {
           this.i++
-            this.message.push("第" + this.i + "条数据")
+          this.message.push("第" + this.i + "条数据")
         },
         //控制isShow的值即可
         showButton: function () {
@@ -74,7 +76,6 @@
         }
       }
     })
-
   </script>
 </body>
 
