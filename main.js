@@ -6,11 +6,15 @@ const jsBeautify = require('js-beautify')
 const stringify = require('json-stringify-pretty-compact')
 const watch = require('glob-watcher')
 //end libs
-const watcher = watch('src/**/*.html', function (done) {
-  console.log('file changed')
+const watcher = watch('src/**/*.html')
+function fileStateChange(path, stat) {
+  console.log('arguments', arguments)
+  // console.log('this------->', this)
+  console.log('file state changed')
   initJsData()
-  done()
-})
+}
+watcher.on('unlink', fileStateChange)
+watcher.on('add', fileStateChange)
 
 function initJsData() {
   const templatePath = './src/index.js'
@@ -34,7 +38,7 @@ function initJsData() {
     return result
   }
 
-  setChildren(htmls)
+  // setChildren(htmls)
 
 
   const content = fs.readFileSync(templatePath, 'utf-8')
