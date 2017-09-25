@@ -5,5 +5,5 @@ module.exports = {
   },
   port: 3005,
   startPath: "/index.html",
-  reloadDebounce: 500,
+  reloadDebounce: 10,
 }
