@@ -8,7 +8,7 @@ module.exports = {
       "/node_modules": "node_modules"
     }
   },
-  host: '0.0.0.0' || localIp.address,
+  host: localIp.address,
   port: 3005,
   startPath: "/index.html",
   reloadDebounce: 10,
