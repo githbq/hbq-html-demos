@@ -13,6 +13,7 @@
   "dependencies": {},
   "devDependencies": {
     "concurrently": "^3.5.0",
+    "get-my-local-ip": "^0.1.16",
     "glob-watcher": "^4.0.0",
     "globby": "^6.1.0",
     "js-beautify": "^1.6.14",
