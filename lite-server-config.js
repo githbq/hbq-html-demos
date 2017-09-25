@@ -8,7 +8,8 @@ module.exports = {
       "/node_modules": "node_modules"
     }
   },
-  host: localIp.address,
+  open: 'external',
+  host: localIp.address, //需要搭配 open:'external' 才会生效
   port: 3005,
   startPath: "/index.html",
   reloadDebounce: 10,
