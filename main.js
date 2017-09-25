@@ -5,16 +5,21 @@ const globby = require('globby')
 const jsBeautify = require('js-beautify')
 const stringify = require('json-stringify-pretty-compact')
 const watch = require('glob-watcher')
+const momentHelper = require('moment-helper')
+
 //end libs
-const watcher = watch('src/**/*.html')
 function fileStateChange(path, stat) {
   console.log('arguments', arguments)
   // console.log('this------->', this)
   console.log('file state changed')
   initJsData()
 }
-watcher.on('unlink', fileStateChange)
-watcher.on('add', fileStateChange)
+function watchFile() {
+  const watcher = watch('src/**/*.html')
+
+  watcher.on('unlink', fileStateChange)
+  watcher.on('add', fileStateChange)
+}
 
 function initJsData() {
   const templatePath = './src/index.js'
@@ -22,23 +27,46 @@ function initJsData() {
   const resolveSrc = pathTool.resolve.bind(pathTool.resolve, ROOT, 'src')
   const htmls = globby.sync(['html/**/*.html', '!**/_*.html', '!**/_*/**/*'], { cwd: 'src' })
 
-  console.log('\n\n\n\n-------------------------------------------')
-  function setChildren(arr = [], item = { children: [] }, parentUrl = '', level = 4, spliter = '/') {
-    const itemsSet = new Set()
-    const reg = new RegExp('^' + parentUrl + '([^/]+?/){' + (level - 1) + '}([^/]+?(/|\.html))', 'g')
+  console.log(`\n\n\n\n-------------${momentHelper.get()}------------------------------`)
+  function setChildren(arr = [], parentUrl = '', level = 1, flatData = {}) {
+    const items = []
+    const reg = new RegExp('^' + parentUrl + '([^/]+?(\/|\.html)){1}', 'g')
+    const dic = {}
     arr.forEach(url => {
       const result = url.match(reg)
-      if (result && result.length > 0) {
-        itemsSet.add(result[0])
+      if (result && result.length > 0 && !dic[result[0]]) {
+        const itemPath = result[0]
+        dic[itemPath] = 1
+        const isLeaf = /\.html$/.test(itemPath)
+        const item = { name: itemPath, level, isLeaf, children: isLeaf ? undefined : setChildren(arr, itemPath, level + 1, flatData).items }
+        flatData[item.name] = flatData[item.name] || []
+        flatData[item.name].push(item)
+        items.push(item)
       }
     })
+    return { items, flatData }
+  }
+  const { flatData, items } = setChildren(htmls)
 
-    const result = Array.from(itemsSet)
-    console.log('result', result)
-    return result
+  console.log(`\n\n\n\n-------------------------------------------------------------------------`)
+
+  function setParent(strs, pathDic = {}) {
+    const keys = []
+    strs.forEach(path => {
+      const key = path.replace(/\/[^\/]+$/, '')
+      if (/\//.test(key)) {
+        keys.push(key)
+      }
+      pathDic[key] = pathDic[key] || []
+      if (!pathDic[key].includes(path)) {
+        pathDic[key].push(path)
+      }
+    })
+    keys.length > 0 && setParent(keys)
+    return pathDic
   }
 
-  // setChildren(htmls)
+
 
 
   const content = fs.readFileSync(templatePath, 'utf-8')
@@ -55,3 +83,4 @@ function initJsData() {
   console.log('src/html/index.js 初始化完成')
 }
 initJsData()
+// watchFile()

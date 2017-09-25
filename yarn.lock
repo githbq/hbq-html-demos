@@ -1316,7 +1316,13 @@ mkdirp@0.3.0:
   dependencies:
     minimist "0.0.8"
 
-moment@*:
+moment-helper@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.npmjs.org/moment-helper/-/moment-helper-0.0.2.tgz#3c23be2334042397be4bc756fac1b7a87acc3af6"
+  dependencies:
+    moment "^2.18.1"
+
+moment@*, moment@^2.18.1:
   version "2.18.1"
   resolved "https://registry.npmjs.org/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 
