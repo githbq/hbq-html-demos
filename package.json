@@ -8,10 +8,11 @@
     "demo"
   ],
   "scripts": {
-    "start": "concurrently \"node main\"  \"lite-server --config  ./lite-server-config.js\" "
+    "start": "concurrently \"node main --watch \"  \"lite-server --config  ./lite-server-config.js\" "
   },
   "dependencies": {},
   "devDependencies": {
+    "cli-color": "^1.2.0",
     "concurrently": "^3.5.0",
     "get-my-local-ip": "^0.1.16",
     "glob-watcher": "^4.0.0",

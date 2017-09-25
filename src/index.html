@@ -28,46 +28,25 @@
     <div class="content">
       <div v-if="listShow" class="container-body-left">
         <ul class="html-list">
-          <li :class="{active:item===currentHtmlUrl}" class="html-item" v-for="(item,index) in htmls" @click="showHtml(item,$event,index)">{{item}}</li>
+          <li :class="{active:item===currentHtmlUrl}" class="html-item" v-for="(item,index) in htmls[0].children"
+            @click="showHtml(item,$event,index)">
+            <span class="ok" v-if="item.url===currentHtmlUrl">√</span> {{item.name}}
+          </li>
         </ul>
       </div>
       <div class="middle" @click="toggle">
       </div>
       <div ref="test" class="container-body-right">
-        <iframe ref="frameMain" v-bind:src="currentHtmlUrl" class="main-iframe" v-if="currentHtmlUrl" frameborder="0"></iframe>
+        <iframe ref="frameMain" v-bind:src="currentHtmlUrl" class="main-iframe" v-show="currentHtmlUrl"
+          frameborder="0">
+        </iframe>
       </div>
     </div>
   </div>
 
-  <script src="index.js"></script>
+  <script src="data.js"></script>
   <script src="libs/vue-dist/vue.js"></script>
-  <script>
-    new Vue({
-      el: '#root',
-      data: {
-        loaded: false,
-        listShow: localStorage.listShow !== '',
-        currentHtmlUrl: localStorage.currentHtmlUrl,
-        htmls: window.htmls || [],
-      },
-      mounted: function () {
-        this.loaded = true
-      },
-      methods: {
-        toggle: function () {
-          this.listShow = !this.listShow
-          localStorage.listShow = this.listShow ? '1' : ''
-        },
-        //向数组添加一条数据即可
-        showHtml: function (url) {
-          this.$refs.frameMain && (this.$refs.frameMain
-            .src = url)
-          localStorage.currentHtmlUrl = this.currentHtmlUrl =
-            url
-        }
-      }
-    })
-  </script>
+  <script src="index.js"></script>
 </body>
 
 </html>

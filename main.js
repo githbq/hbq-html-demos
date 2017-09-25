@@ -1,5 +1,6 @@
 //libs
 const pathTool = require('path')
+const color = require('cli-color')
 const fs = require('fs')
 const globby = require('globby')
 const jsBeautify = require('js-beautify')
@@ -15,21 +16,23 @@ function fileStateChange(path, stat) {
   initJsData()
 }
 function watchFile() {
-  const watcher = watch('src/**/*.html')
-
+  const htmlPattern = 'src/**/*.html'
+  const watcher = watch(htmlPattern)
+  console.log(color.blue(`watching ${htmlPattern}`))
   watcher.on('unlink', fileStateChange)
   watcher.on('add', fileStateChange)
 }
+const ROOT = __dirname
+const templatePath = './src/data.js'
 
 function initJsData() {
-  const templatePath = './src/index.js'
-  const ROOT = __dirname
+
   const resolveSrc = pathTool.resolve.bind(pathTool.resolve, ROOT, 'src')
   const htmls = globby.sync(['html/**/*.html', '!**/_*.html', '!**/_*/**/*'], { cwd: 'src' })
 
-  console.log(`\n\n\n\n-------------${momentHelper.get()}------------------------------`)
+  console.log(`\n------------------------${color.bgBlackBright.yellowBright(momentHelper.get())}-------------------`)
   function setChildren(arr = [], parentUrl = '', level = 1, flatData = {}) {
-    const items = []
+    let items = []
     const reg = new RegExp('^' + parentUrl + '([^/]+?(\/|\.html)){1}', 'g')
     const dic = {}
     arr.forEach(url => {
@@ -38,49 +41,35 @@ function initJsData() {
         const itemPath = result[0]
         dic[itemPath] = 1
         const isLeaf = /\.html$/.test(itemPath)
-        const item = { name: itemPath, level, isLeaf, children: isLeaf ? undefined : setChildren(arr, itemPath, level + 1, flatData).items }
+        const item = { name: itemPath.replace(/\/$/, ''), url: itemPath, level, isLeaf, children: isLeaf ? undefined : setChildren(arr, itemPath, level + 1, flatData).items }
         flatData[item.name] = flatData[item.name] || []
         flatData[item.name].push(item)
         items.push(item)
       }
     })
+    items = items.sort(function (a, b) {
+      return a.isLeaf ? 1 : 0
+    })
     return { items, flatData }
   }
-  const { flatData, items } = setChildren(htmls)
+  let { flatData, items } = setChildren(htmls)
 
-  console.log(`\n\n\n\n-------------------------------------------------------------------------`)
-
-  function setParent(strs, pathDic = {}) {
-    const keys = []
-    strs.forEach(path => {
-      const key = path.replace(/\/[^\/]+$/, '')
-      if (/\//.test(key)) {
-        keys.push(key)
-      }
-      pathDic[key] = pathDic[key] || []
-      if (!pathDic[key].includes(path)) {
-        pathDic[key].push(path)
-      }
-    })
-    keys.length > 0 && setParent(keys)
-    return pathDic
-  }
-
-
-
-
-  const content = fs.readFileSync(templatePath, 'utf-8')
   console.log(`发现${htmls.length}个html文件`)
   //移除掉 = 号之后的内容
-  let newContent = content.replace(/\[[\w\W]*].*/igm, '')
+  let newContent = 'window.htmlData='
   //美化json
-  newContent += stringify(htmls, { maxLength: 50 })
+  newContent += stringify({ flatData, items }, { maxLength: 50 })
 
   //美化js
   newContent = jsBeautify(newContent + ';', { indent_size: 2 })
   // console.log(`生成 js 结果:\n${newContent}`)
   fs.writeFileSync(templatePath, newContent)
+  console.log(color.greenBright(stringify(htmls)))
   console.log('src/html/index.js 初始化完成')
 }
 initJsData()
-// watchFile()
+if (process.argv.slice(2).indexOf('--watch') >= 0) {
+  watchFile()
+}
+
+console.log(color.yellowBright(`--------------------------------------------------------------`))

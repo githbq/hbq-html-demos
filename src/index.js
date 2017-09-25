@@ -1,13 +1,29 @@
-window.htmls = [
-  "html/css3动画/小球弹跳/index.1.html",
-  "html/css3动画/小球弹跳/index.2.html",
-  "html/css3动画/小球弹跳/index.3.html",
-  "html/css3动画/小球弹跳/index.html",
-  "html/css3动画/风车/index.html",
-  "html/css3动画/齿轮/index.html",
-  "html/other-demo.html",
-  "html/sidebar-demo.html",
-  "html/test/other-demo.html",
-  "html/vue-demo5.html",
-  "html/齿轮/index.html"
-];
+console.log('htmlData', window.htmlData)
+
+new Vue({
+  el: '#root',
+  data: {
+    loaded: false,
+    listShow: localStorage.listShow !== '',
+    currentHtmlUrl: localStorage.currentHtmlUrl,
+    htmls: window.htmlData.items || [],
+  },
+  mounted: function () {
+    this.loaded = true
+  },
+  methods: {
+    toggle: function () {
+      this.listShow = !this.listShow
+      localStorage.listShow = this.listShow ? '1' : ''
+    },
+    //向数组添加一条数据即可
+    showHtml: function (item) {
+      if (item.isLeaf) {
+        this.$refs.frameMain && (this.$refs.frameMain.src = localStorage.currentHtmlUrl = this.currentHtmlUrl = item.url)
+      } else {
+        item.expand = true
+      }
+
+    }
+  }
+})
