@@ -41,7 +41,14 @@ function initJsData() {
         const itemPath = result[0]
         dic[itemPath] = 1
         const isLeaf = /\.html$/.test(itemPath)
-        const item = { name: itemPath.replace(/\/$/, ''), url: itemPath, level, isLeaf, children: isLeaf ? undefined : setChildren(arr, itemPath, level + 1, flatData).items }
+        const item = {
+          name: itemPath.replace(/\/$/, ''),
+          expand: false,
+          expanded: false,
+          url: itemPath,
+          level, isLeaf,
+          children: isLeaf ? undefined : setChildren(arr, itemPath, level + 1, flatData).items
+        }
         flatData[item.name] = flatData[item.name] || []
         flatData[item.name].push(item)
         items.push(item)
@@ -58,7 +65,7 @@ function initJsData() {
   //移除掉 = 号之后的内容
   let newContent = 'window.htmlData='
   //美化json
-  newContent += stringify({ flatData, items }, { maxLength: 50 })
+  newContent += stringify({ flatData, items, key: Math.random() }, { maxLength: 50 })
 
   //美化js
   newContent = jsBeautify(newContent + ';', { indent_size: 2 })

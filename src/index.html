@@ -23,21 +23,22 @@
 <body>
   <div id="root" class="main hidden" :class="{hidden:!loaded,loaded:loaded}">
     <div class="head">
-      <h1>html-demos-> <a target="blank" :href="currentHtmlUrl">{{currentHtmlUrl}} </a></h1>
+      <h1>html-demos-> <a target="blank" :href="currentUrl">{{currentUrl}} </a></h1>
     </div>
     <div class="content">
       <div v-if="listShow" class="container-body-left">
-        <ul class="html-list">
-          <li :class="{active:item===currentHtmlUrl}" class="html-item" v-for="(item,index) in htmls[0].children"
+        <tree :tree="htmls[0].children" :item-click="showHtml" :current-url="currentUrl" :expand="true"></tree>
+        <!-- <ul class="html-list">
+          <li :class="{active:item===currentUrl}" class="html-item" v-for="(item,index) in htmls[0].children"
             @click="showHtml(item,$event,index)">
-            <span class="ok" v-if="item.url===currentHtmlUrl">√</span> {{item.name}}
+            <span class="ok" v-if="item.url===currentUrl">√</span> {{item.name}}
           </li>
-        </ul>
+        </ul> -->
       </div>
       <div class="middle" @click="toggle">
       </div>
       <div ref="test" class="container-body-right">
-        <iframe ref="frameMain" v-bind:src="currentHtmlUrl" class="main-iframe" v-show="currentHtmlUrl"
+        <iframe ref="frameMain" v-bind:src="currentUrl" class="main-iframe" v-show="currentUrl"
           frameborder="0">
         </iframe>
       </div>

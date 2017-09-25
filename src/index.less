@@ -65,18 +65,29 @@ li {
 .html-item {
     color: black;
     font-size: 16px;
-    padding: 15px;
+    padding: 15px 0px 15px 15px;
     background-color: lightblue;
     margin: 2px;
-}
-
-.html-item:hover {
-    background-color: aquamarine;
+    &.sub-item {
+        color: white;
+        background: #7DDAF7;
+    }
 }
 
 .html-item.active {
     background-color: greenyellow;
     color: blue;
+    &.sub-item {
+        color: #54A191;
+    }
+}
+
+.html-item:hover {
+    // background-color: #798F9E;
+    font-weight: bold;
+    &.sub-item {
+        font-weight: bold;
+    }
 }
 
 .hidden {
@@ -91,4 +102,26 @@ li {
     font-weight: bold;
     font-size: 18px;
     color: #FF0808;
+}
+
+::-webkit-scrollbar-track-piece {
+    //滚动条凹槽的颜色，还可以设置边框属性
+    background-color: #f8f8f8;
+}
+
+ ::-webkit-scrollbar {
+    //滚动条的宽度
+    width: 9px;
+    height: 9px;
+}
+
+ ::-webkit-scrollbar-thumb {
+    //滚动条的设置
+    background-color: #dddddd;
+    background-clip: padding-box;
+    min-height: 28px;
+}
+
+ ::-webkit-scrollbar-thumb:hover {
+    background-color: #bbb;
 }

@@ -2,11 +2,20 @@ console.log('htmlData', window.htmlData)
 
 new Vue({
   el: '#root',
-  data: {
-    loaded: false,
-    listShow: localStorage.listShow !== '',
-    currentHtmlUrl: localStorage.currentHtmlUrl,
-    htmls: window.htmlData.items || [],
+  data: function () {
+    var data = {
+      loaded: false,
+      listShow: localStorage.listShow !== '',
+      currentUrl: localStorage.currentUrl,
+      htmls: window.htmlData.items || []
+    }
+    if (localStorage.htmls) {
+      var cache = JSON.parse(localStorage.htmls)
+      if (cache.key === window.htmlData.key) {
+        data.htmls = cache
+      }
+    }
+    return data
   },
   mounted: function () {
     this.loaded = true
@@ -19,11 +28,49 @@ new Vue({
     //向数组添加一条数据即可
     showHtml: function (item) {
       if (item.isLeaf) {
-        this.$refs.frameMain && (this.$refs.frameMain.src = localStorage.currentHtmlUrl = this.currentHtmlUrl = item.url)
-      } else {
-        item.expand = true
+        this.$refs.frameMain && (this.$refs.frameMain.src = localStorage.currentUrl = this.currentUrl = item.url)
+      }
+      localStorage.htmls = JSON.stringify(this.htmls)
+    }
+  },
+  components: {
+    tree: {
+      name: 'tree',
+      props: ['tree'],
+      template: `
+      <ul class="html-list" >
+        <li v-for='item in tree'
+          :class="{active:item.url===currentUrl,'sub-item':item.level>2}"
+          class="html-item"
+          @click="_itemClick(item,$event)" >
+          <span class="ok" v-if="item.url===currentUrl">√</span>
+          {{item.name}}
+          <tree :item-click="itemClick" :current-url="currentUrl" :tree='item.children' v-if='checkExpand(item) ' ></tree>
+        </li>
+      </ul>`,
+      props: ['tree', 'expand', 'itemClick', 'currentUrl'],
+      data() {
+        return {
+        }
+      },
+      methods: {
+        checkExpand(item) {
+          if (item.level < 3 && !item.expanded) {
+            item.expand = true
+            item.expanded = true
+          }
+          return item.expand
+        },
+        _itemClick: function (item, $event) {
+          if (!item.isLeaf) {
+            item.expand = !item.expand
+          }
+          this.itemClick(item, $event)
+          event.cancelBubble = true
+        }
       }
 
     }
   }
+
 })
