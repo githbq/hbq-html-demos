@@ -27,7 +27,6 @@ const templatePath = './src/data.js'
 
 function initJsData() {
 
-  const resolveSrc = pathTool.resolve.bind(pathTool.resolve, ROOT, 'src')
   const htmls = globby.sync(['html/**/*.html', '!**/_*.html', '!**/_*/**/*'], { cwd: 'src' })
 
   console.log(`\n------------------------${color.bgBlackBright.yellowBright(momentHelper.get())}-------------------`)
