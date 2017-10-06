@@ -41,7 +41,8 @@ function initJsData() {
         dic[itemPath] = 1
         const isLeaf = /\.html$/.test(itemPath)
         const item = {
-          name: itemPath.replace(/\/$/, ''),
+          id: Math.random(),
+          name: itemPath.replace(/\/$/, '').replace(/\/.*\//g, ''),
           expand: false,
           expanded: false,
           url: itemPath,

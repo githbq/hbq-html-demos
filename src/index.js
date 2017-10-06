@@ -40,7 +40,9 @@ new Vue({
       template: `
       <ul class="html-list" >
         <li v-for='item in tree'
-          :class="{active:item.url===currentUrl,'sub-item':item.level>2}"
+          @mouseleave.stop="itemLeave(item,$event)"
+          @mouseenter.stop="itemEnter(item,$event)"
+          :class="{hover:currentId===item.id,active:item.url===currentUrl,'sub-item':item.level>2}"
           class="html-item"
           @click="_itemClick(item,$event)" >
           <span class="ok" v-if="item.url===currentUrl">√</span>
@@ -51,9 +53,16 @@ new Vue({
       props: ['tree', 'expand', 'itemClick', 'currentUrl'],
       data() {
         return {
+          currentId: null,
         }
       },
       methods: {
+        itemLeave(item, $event) {
+          this.currentId = null
+        },
+        itemEnter(item, $event) {
+          this.currentId = item.id
+        },
         checkExpand(item) {
           if (item.level < 3 && !item.expanded) {
             item.expand = true
