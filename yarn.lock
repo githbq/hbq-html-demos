@@ -31,6 +31,10 @@ ajv@^4.9.1:
     co "^4.6.0"
     json-stable-stringify "^1.0.1"
 
+angular@^1.6.7:
+  version "1.6.7"
+  resolved "http://registry.npm.taobao.org/angular/download/angular-1.6.7.tgz#0f89837dae1776b01ccb1fa2096db0d9373d9897"
+
 ansi-regex@^0.2.0, ansi-regex@^0.2.1:
   version "0.2.1"
   resolved "https://registry.npmjs.org/ansi-regex/-/ansi-regex-0.2.1.tgz#0d8e946967a3d8143f93e24e298525fc1b2235f9"

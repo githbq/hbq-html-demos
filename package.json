@@ -10,7 +10,9 @@
   "scripts": {
     "start": "concurrently \"node main --watch \"  \"lite-server --config  ./lite-server-config.js\" "
   },
-  "dependencies": {},
+  "dependencies": {
+    "angular": "^1.6.7"
+  },
   "devDependencies": {
     "cli-color": "^1.2.0",
     "concurrently": "^3.5.0",
