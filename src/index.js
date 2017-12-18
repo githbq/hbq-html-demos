@@ -1,6 +1,6 @@
 console.log('htmlData', window.htmlData)
 var localStorage = window.localStorage
-window.Vue({
+var vue = new window.Vue({
   el: '#root',
   data: function () {
     var data = {
