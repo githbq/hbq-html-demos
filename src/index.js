@@ -1,6 +1,6 @@
 console.log('htmlData', window.htmlData)
-
-new Vue({
+var localStorage = window.localStorage
+window.Vue({
   el: '#root',
   data: function () {
     var data = {
@@ -25,7 +25,7 @@ new Vue({
       this.listShow = !this.listShow
       localStorage.listShow = this.listShow ? '1' : ''
     },
-    //向数组添加一条数据即可
+    // 向数组添加一条数据即可
     showHtml: function (item) {
       if (item.isLeaf) {
         this.$refs.frameMain && (this.$refs.frameMain.src = localStorage.currentUrl = this.currentUrl = item.url)
@@ -36,7 +36,6 @@ new Vue({
   components: {
     tree: {
       name: 'tree',
-      props: ['tree'],
       template: `
       <ul class="html-list" >
         <li v-for='item in tree'
@@ -51,19 +50,19 @@ new Vue({
         </li>
       </ul>`,
       props: ['tree', 'expand', 'itemClick', 'currentUrl'],
-      data() {
+      data () {
         return {
-          currentId: null,
+          currentId: null
         }
       },
       methods: {
-        itemLeave(item, $event) {
+        itemLeave (item, $event) {
           this.currentId = null
         },
-        itemEnter(item, $event) {
+        itemEnter (item, $event) {
           this.currentId = item.id
         },
-        checkExpand(item) {
+        checkExpand (item) {
           if (item.level < 3 && !item.expanded) {
             item.expand = true
             item.expanded = true
@@ -75,7 +74,7 @@ new Vue({
             item.expand = !item.expand
           }
           this.itemClick(item, $event)
-          event.cancelBubble = true
+          $event.cancelBubble = true
         }
       }
 
