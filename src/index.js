@@ -45,24 +45,24 @@ var vue = new window.Vue({
           class="html-item"
           @click="_itemClick(item,$event)" >
           <span class="ok" v-if="item.url===currentUrl">√</span>
-          {{item.name}}
+          {{item.name}}{{item.children&&item.children.length>0&&"("+item.children.length+")"}}
           <tree :item-click="itemClick" :current-url="currentUrl" :tree='item.children' v-if='checkExpand(item) ' ></tree>
         </li>
       </ul>`,
       props: ['tree', 'expand', 'itemClick', 'currentUrl'],
-      data () {
+      data() {
         return {
           currentId: null
         }
       },
       methods: {
-        itemLeave (item, $event) {
+        itemLeave(item, $event) {
           this.currentId = null
         },
-        itemEnter (item, $event) {
+        itemEnter(item, $event) {
           this.currentId = item.id
         },
-        checkExpand (item) {
+        checkExpand(item) {
           if (item.level < 3 && !item.expanded) {
             item.expand = true
             item.expanded = true
