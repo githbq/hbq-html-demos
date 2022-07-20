@@ -11,7 +11,7 @@
     "start": "concurrently \"node main --watch \"  \"lite-server --config  ./lite-server-config.js\" "
   },
   "dependencies": {
-    "angular": "^1.6.7"
+    "angular": "^1.8.3"
   },
   "devDependencies": {
     "cli-color": "^1.2.0",
